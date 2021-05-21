@@ -6,14 +6,14 @@
     $firstName = "";
     $lastName = "";
 
-    //$databaseName = "Contact_Manager";
-    //$databaseUser = "ManagerOfContactManager";
-    //$databasePassword = "WeLoveContactManager";
+    $databaseName = "Contact_Manager";
+    $databaseUser = "ManagerOfContactManager";
+    $databasePassword = "WeLoveContactManager";
 
     // Connect to the sqlServer '$databaseName' on 'localhost' with the username '$databaseUser'
     // and the password '$databasePassword
 
-    $conn = new mysqli("localhost", "ManagerOfContactManager",  "WeLoveContactManager", "Contact_Manager"); 
+    $conn = new mysqli("localhost", "$databaseUser",  "$databasePassword", "$databaseName"); 
 
     // If we have a connection error, let us know.
     if($conn->connect_error)
