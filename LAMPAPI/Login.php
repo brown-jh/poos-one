@@ -82,7 +82,7 @@
 	function returnWithInfo( $id, $dateCreated, $dateLastLoggedIn, $firstName, $lastName )
 	{
 		$retValue = '{"id":' . $id . ',"dateCreated":"' . $dateCreated . '",
-            "dateLastLoggedIn": ' . $dateLastLoggedIn . ', "firstName":"' . $firstName . '",
+            "dateLastLoggedIn": "' . $dateLastLoggedIn . '", "firstName":"' . $firstName . '",
             "lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
