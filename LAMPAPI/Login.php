@@ -26,7 +26,7 @@
         // Prepare a SQL command to send to the server!
         // **Currently using what was in the class example, but this may need to change
         // (but probably not)**
-        $stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
+        $stmt = $conn->prepare("SELECT ID,DateCreated,DateLastLoggedIn,firstName,lastName FROM Users WHERE Login=? AND Password =?");
         // Now let's bind our variables to those ?s in the above line
         $stmt->bind_param("ss", $inData["login"], $inData["password"]);
         // Send the now prepared command!
@@ -37,7 +37,9 @@
         // Now that we have our results, lets return the user if it existed.
         if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+            //loginUpdate($conn);
+			returnWithInfo( $row['ID'], $row['DateCreated'], $row['DateLastLoggedIn'],
+                            $row['firstName'], $row['lastName']);
 		}
 		else
 		{
@@ -60,17 +62,28 @@
 		echo $obj;
 	}
 	
+
+    function loginUpdate($conn)
+    {
+        // TODO: Update 'DateLastLoggedIn' when user logs in.
+        $currentTime = date('Y-m-d');
+        $timestmt = $conn->prepare("UPDATE Users SET DateLastLoggedIn=? WHERE ID=?");
+    }
+
     // If we have an error, return id as 0
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"id":0,"dateCreated":"", "dateLastLoggedIn":"",
+            "firstName":"","lastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
     // No error? return our ID
-	function returnWithInfo( $firstName, $lastName, $id )
+	function returnWithInfo( $id, $dateCreated, $dateLastLoggedIn, $firstName, $lastName )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"id":' . $id . ',"dateCreated":"' . $dateCreated . '",
+            "dateLastLoggedIn": ' . $dateLastLoggedIn . ', "firstName":"' . $firstName . '",
+            "lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 
