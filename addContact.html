@@ -1,0 +1,193 @@
+<html>
+<head>
+	<title>Small Project New Contact Demo</title>
+
+<script type="text/javascript">
+function checkContact()
+{
+  // Get the data the user entered.
+  var first = document.getElementById("firstName").value;
+  var last = document.getElementById("lastName").value;
+  var phone = document.getElementById("phoneNumber").value;
+  var email = document.getElementById("emailAddress").value;
+
+  var result = document.getElementById("addResult");
+  result.innerHTML = ""; // Clear the login result field.
+  
+
+  // Check for invalid data: either missing names, invalid phone, or invalid email.
+  // Since the email and phone are optional, don't check them if empty.
+  if (first == "" || last == "")
+  {
+    result.innerHTML += "Please fill in first and last name. <br>";
+  }
+
+  var phoneRegex = /^\d{7}$|^\d{10}$/; //Matches a string of 7 or 10 digits. 
+  if (phone != "" && !phoneRegex.test(phone))
+  {
+    result.innerHTML += "Phone number must be either 7 or 10 digits (no dashes). <br>";
+  }
+  
+  // Check for a valid email (foo@bar.baz) via regex.
+  var emailRegex = /.+\@.+\..+/; 
+  if (email != "" && !emailRegex.test(email))
+  {
+    result.innerHTML += "Email must be of the form name@site.foo. <br>";
+  }
+
+  //TODO: Also check if the entry is duplicate?
+
+  // If we got no errors, then we can submit the data.
+  if (result.innerHTML == "")
+  {
+    // First clear the textboxes.
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("phoneNumber").value = "";
+    document.getElementById("emailAddress").value = "";
+
+    // TODO: This is where we would submit the request to the server.
+    result.innerHTML = "New contact added."
+    var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '1' + '"}';
+    alert("TODO: Should submit:\n" + jsonPayload);
+  }
+}
+
+// TODO: This function should return the user to the main page once that exists.
+function goBack()
+{
+  alert("TODO: Should set document.location.href to the main page.");
+}
+</script>
+
+<style>
+body 
+{
+    background-color: #89cff0;
+}
+
+#title 
+{
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #FFFFFF;
+}
+
+#contactDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
+.buttons
+{
+    font-size: 30px;
+    border-radius: 25px;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.buttons:hover{
+    background-color: #00d5124f;
+    color: #FFFFFF;
+    opacity: 50%;
+}
+
+#firstName
+{
+	font-size: 30px;
+}
+#lastName
+{
+	font-size: 30px;
+}
+#phoneNumber
+{
+	font-size: 30px;
+}
+#emailAddress
+{
+	font-size: 30px;
+}
+
+input[type="text"]{
+    border-radius: 25px;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#inner-title{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #95060a;
+}
+
+#addResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #95060a;
+    background-color: #ffffff;
+}
+
+#userName{
+    display: inline-block;
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+}
+
+#cancelButton{
+    width: 20%;
+    margin-left: 40%;
+}
+
+select{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    font-size: 0.75em;
+    font-family: 'Ubuntu', sans-serif;
+}
+</style>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+</head>
+<body>
+
+<h1 id="title">Add Contact</h1>
+
+<div id="contactDiv">
+	<span id="inner-title">To add a new contact, please give the first and last name; <br>email and phone are optional.<br></span>
+	<input type="text" id="firstName" placeholder="First name" /><br />
+        <input type="text" id="lastName" placeholder="Last name" /><br />
+        <input type="text" id="phoneNumber" placeholder="Phone number" /><br />
+        <input type="text" id="emailAddress" placeholder="Email address" /><br />
+	<button type="button" id="checkButton" class="buttons" onclick="checkContact();"> Add contact </button>
+        <button type="button" id="cancelButton" class="buttons" onclick="goBack();"> Cancel </button>
+	<span id="addResult"></span>
+</div>
+
+</body>
+</html>
