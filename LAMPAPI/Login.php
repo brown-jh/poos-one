@@ -6,9 +6,9 @@
     $firstName = "";
     $lastName = "";
 
-    $databaseName = "Contact_Manager";
-    $databaseUser = "ManagerOfContactManager";
-    $databasePassword = "WeLoveContactManager";
+    //$databaseName = "Contact_Manager";
+    //$databaseUser = "ManagerOfContactManager";
+    //$databasePassword = "WeLoveContactManager";
 
     // Connect to the sqlServer '$databaseName' on 'localhost' with the username '$databaseUser'
     // and the password '$databasePassword
