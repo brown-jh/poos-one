@@ -1,6 +1,7 @@
 <?php
 
     $inData = getRequestInfo();
+    
     $id = 0;
     $firstName = "";
     $lastName = "";
@@ -27,7 +28,7 @@
         // (but probably not)**
         $stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
         // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("ss", $inData['login'], $inData['password']);
+        $stmt->bind_param("ss", $inData["login"], $inData["password"]);
         // Send the now prepared command!
         $stmt->execute();
         // And see if we had a successful login
@@ -53,7 +54,25 @@
         return json_decode(file_get_contents('php://input'), true);
     }
 
-
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+	
+    // If we have an error, return id as 0
+	function returnWithError( $err )
+	{
+		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+	
+    // No error? return our ID
+	function returnWithInfo( $firstName, $lastName, $id )
+	{
+		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
 
 
 
