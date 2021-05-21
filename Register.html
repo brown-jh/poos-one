@@ -37,15 +37,15 @@ function registerUser()
   // TODO: Hash password.
   //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
   var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-  alert("TODO: Should submit to Register API:\n" + jsonPayload);
+  alert("TODO: Should submit to Register API and make cookie:\n" + jsonPayload);
   // TODO: Database query to add the new user, and make the cookie.
-  alert("TODO: Should go to main page.");
+  location.href = "index.htm";
 }
 
 // Go to the Register screen when the user clicks on the Register button.
 function goToLogin()
 {
-  alert("TODO: Go to login screen.");
+  location.href = "Login.html";
 }
         </script>
 
