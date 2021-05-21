@@ -13,7 +13,7 @@
     // Connect to the sqlServer '$databaseName' on 'localhost' with the username '$databaseUser'
     // and the password '$databasePassword
 
-    $conn = new mysqli("localhost", "$databaseUser",  "$databasePassword", "$databaseName"); 
+    $conn = new mysqli("localhost", "ManagerOfContactManager",  "WeLoveContactManager", "Contact_Manager"); 
 
     // If we have a connection error, let us know.
     if($conn->connect_error)
