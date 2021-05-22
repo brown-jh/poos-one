@@ -21,10 +21,12 @@
 		// looked at Friday lecture to help, common error he said would be the capilization/spelling
 		// of FirstName/firstName, UserID/userID, etc. so check that first if errors occur
 		//
-		$stmt = $conn->prepare("select * from Contacts where (firstName like ? or lastName like ?) and UserID=?");
+		$stmt = $conn->prepare("SELECT * from Contacts WHERE (firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phoneNumber LIKE ?) AND UserID=?");
 		$firstName = "%" . $inData["firstName"] . "%";
 		$lastName = "%" . $inData["lastName"] . "%";
-		$stmt->bind_param("sss", $firstName, $lastName, $inData["userId"]);
+		$email = "%" . $inData["email"] . "%";
+		$phoneNumber = "%" . $inData["phoneNumber"] . "%";
+		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $inData["userId"]);
 		//
 		$stmt->execute();
 		
@@ -39,7 +41,7 @@
 			$searchCount++;
 
 			// changed from his lecture, if search results show something weird, probably because of this
-			$searchResults .= '"' . $row["firstName"] . '"' . $row["lastName"] . '"';
+			$searchResults .= '"' . $row["firstName"] . '"' . $row["lastName"] . '"' . $row["email"] . '"' . $row["phoneNumber"] . '"';
 		}
 		
 		// search was not found, so record back nothing was found
