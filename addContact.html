@@ -60,117 +60,7 @@ function goBack()
 }
 </script>
 
-<style>
-body 
-{
-    background-color: #89cff0;
-}
-
-#title 
-{
-    font-size: 40px;
-    width: 100%;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
-}
-
-#contactDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
-}
-
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
-#firstName
-{
-	font-size: 30px;
-}
-#lastName
-{
-	font-size: 30px;
-}
-#phoneNumber
-{
-	font-size: 30px;
-}
-#emailAddress
-{
-	font-size: 30px;
-}
-
-input[type="text"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-#addResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-    background-color: #ffffff;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-#cancelButton{
-    width: 20%;
-    margin-left: 40%;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-</style>
+<link href="css/styles.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
@@ -178,15 +68,15 @@ select{
 
 <h1 id="title">Add Contact</h1>
 
-<div id="contactDiv">
+<div id="mainDiv">
 	<span id="inner-title">To add a new contact, please give the first and last name; <br>email and phone are optional.<br></span>
 	<input type="text" id="firstName" placeholder="First name" /><br />
         <input type="text" id="lastName" placeholder="Last name" /><br />
         <input type="text" id="phoneNumber" placeholder="Phone number" /><br />
         <input type="text" id="emailAddress" placeholder="Email address" /><br />
-	<button type="button" id="checkButton" class="buttons" onclick="checkContact();"> Add contact </button>
-        <button type="button" id="cancelButton" class="buttons" onclick="goBack();"> Cancel </button>
-	<span id="addResult"></span>
+	<input type="button" id="checkButton" class="buttons spaced" value="Add contact" onclick="checkContact();">
+        <input type="button" id="cancelButton" class="buttons spaced" value="Cancel" onclick="goBack();">
+	<span id="addResult" class="results errorText"></span>
 </div>
 
 </body>

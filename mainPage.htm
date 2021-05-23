@@ -105,124 +105,7 @@ function logOut()
 
 </script>
 
-<style>
-body 
-{
-    background-color: #89cff0;
-}
-
-#title 
-{
-    font-size: 40px;
-    width: 100%;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
-}
-
-#mainDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
-}
-
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
-.searchBox
-{
-        border-radius: 25px;
-	font-size: 20px;
-        width: 22%;
-        margin-left: 1%;
-        margin-right: 1%;
-        font-family: 'Ubuntu', sans-serif;
-}
-
-.fullWidth
-{
-        display: inline-block;
-        width: 100%;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-#searchResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    background-color: #ffffff;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-.smallButton
-{
-    font-size: 20px;
-    border-radius: 25px;
-    width: 24%;
-    margin-left: 13%;
-    margin-right: 13%;
-    margin-top: 1%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    float:right;
-}
-
-.logoutButton
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 24%;
-    margin-left: 38%;
-    margin-top: 4%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-</style>
+<link href="css/styles.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
@@ -238,11 +121,11 @@ select{
           <input type="text" id="phoneSearch" class="searchBox" placeholder="Phone number">
           <input type="text" id="emailSearch" class="searchBox" placeholder="Email address">
         </span>
-	<input type="button" id="checkButton" class="buttons" value="Search" onClick="searchContacts();">
-        <span id="searchResult"></span>
-        <input type="button" id="backButton" class="buttons" value="Add new contact" onClick="goToAdd();">
+	<input type="button" id="checkButton" class="buttons spaced" value="Search" onClick="searchContacts();">
+        <span id="searchResult" class="results"></span>
+        <input type="button" id="backButton" class="buttons spaced" value="Add new contact" onClick="goToAdd();">
         <span class="fullWidth">
-            <input type="button" class="logoutButton" value="Log out" onClick="logOut();">
+            <input type="button" class="buttons" id="logoutButton" value="Log out" onClick="logOut();">
         <span>
 </div>
 
