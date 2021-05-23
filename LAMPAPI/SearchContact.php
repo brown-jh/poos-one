@@ -2,11 +2,12 @@
 
 	$inData = getRequestInfo();
 	
-	// results and how many searches are found
+	// Results and how many searches are found.
 	$searchResults = "";
+	$searchContactArray = array();
 	$searchCount = 0;
 	
-	// database information, name, user, and password to make the mysql connection
+	// Database information, name, user, and password to make the mysql connection.
 	$databaseName = "Contact_Manager";
     $databaseUser = "ManagerOfContactManager";
     $databasePassword = "WeLoveContactManager";
@@ -18,41 +19,40 @@
 	} 
 	else
 	{
-		// looked at Friday lecture to help, common error he said would be the capilization/spelling
-		// of FirstName/firstName, UserID/userID, etc. so check that first if errors occur
-		//
-		$stmt = $conn->prepare("SELECT * from Contacts WHERE (firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phoneNumber LIKE ?) AND UserID=?");
-		$firstName = "%" . $inData["firstName"] . "%";
-		$lastName = "%" . $inData["lastName"] . "%";
-		$email = "%" . $inData["email"] . "%";
-		$phoneNumber = "%" . $inData["phoneNumber"] . "%";
-		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $inData["userId"]);
-		//
+		// Grabs contact(s) from Contacts table where FirstName, LastName, Email, or Phone Number are similar and UserID matches the current logged in user.
+		$stmt = $conn->prepare("SELECT * from Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR PhoneNumber LIKE ?) AND UserID=?");
+		$firstName = "%" . $inData["FirstName"] . "%";
+		$lastName = "%" . $inData["LastName"] . "%";
+		$email = "%" . $inData["Email"] . "%";
+		$phoneNumber = "%" . $inData["PhoneNumber"] . "%";
+		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $inData["UserID"]);
+
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
 		
 		while($row = $result->fetch_assoc())
 		{
+            // If more than one contact is found, seperate them with a ','.
 			if( $searchCount > 0 )
 			{
 				$searchResults .= ",";
 			}
 			$searchCount++;
-
-			// changed from his lecture, if search results show something weird, probably because of this
-			$searchResults .= '"' . $row["firstName"] . '"' . $row["lastName"] . '"' . $row["email"] . '"' . $row["phoneNumber"] . '"';
+            
+            // Add the matched contact to the array.
+			$searchContactArray[] = $row;
 		}
 		
-		// search was not found, so record back nothing was found
+		// Search was not found, so record back nothing was found.
 		if( $searchCount == 0 )
 		{
 			returnWithError( "No Records Found" );
 		}
-		// if search found something, then record back the search result
+		// If search found something, then record back the search result.
 		else
 		{
-			returnWithInfo( $searchResults );
+			returnWithInfo( json_encode($searchContactArray) );
 		}
 		
 		$stmt->close();
@@ -72,15 +72,15 @@
 	
 	function returnWithError( $err )
 	{
-		// leaving this for now, but if error code doesn't make sense when a contact is not found, this is where to change that 
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		// If no matching contact was found, then return with no matching error, or if other error occurs, return with that.
+		$retValue = '{"id":0,"firstName":"","lastName":"","email":"","phoneNumber":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $searchResults )
+	function returnWithInfo( $searchContactArray )
 	{
-		$retValue = '{"results":[' . $searchResults . '],"error":""}';
-		sendResultInfoAsJson( $retValue );
+        // If a matching contact is found, return back the contacts information.
+		sendResultInfoAsJson( $searchContactArray );
 	}
 	
 ?>
