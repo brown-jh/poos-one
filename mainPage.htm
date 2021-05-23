@@ -106,58 +106,6 @@ function logOut()
 </script>
 
 <link href="css/styles.css" rel="stylesheet">
-<style>
-
-#searchResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    background-color: #ffffff;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-.smallButton
-{
-    font-size: 20px;
-    border-radius: 25px;
-    width: 24%;
-    margin-left: 13%;
-    margin-right: 13%;
-    margin-top: 1%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    float:right;
-}
-
-.logoutButton
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 24%;
-    margin-left: 38%;
-    margin-top: 4%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-</style>
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
@@ -174,10 +122,10 @@ select{
           <input type="text" id="emailSearch" class="searchBox" placeholder="Email address">
         </span>
 	<input type="button" id="checkButton" class="buttons spaced" value="Search" onClick="searchContacts();">
-        <span id="searchResult"></span>
+        <span id="searchResult" class="results"></span>
         <input type="button" id="backButton" class="buttons spaced" value="Add new contact" onClick="goToAdd();">
         <span class="fullWidth">
-            <input type="button" class="logoutButton" value="Log out" onClick="logOut();">
+            <input type="button" id="logoutButton" value="Log out" onClick="logOut();">
         <span>
 </div>
 

@@ -61,41 +61,6 @@ function goBack()
 </script>
 
 <link href="css/styles.css" rel="stylesheet">
-<style>
-
-#addResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-    background-color: #ffffff;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-#cancelButton{
-    width: 20%;
-    margin-left: 40%;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-</style>
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
@@ -111,7 +76,7 @@ select{
         <input type="text" id="emailAddress" class="bigInput" placeholder="Email address" /><br />
 	<button type="button" id="checkButton" class="buttons spaced" onclick="checkContact();"> Add contact </button>
         <button type="button" id="cancelButton" class="buttons spaced" onclick="goBack();"> Cancel </button>
-	<span id="addResult"></span>
+	<span id="addResult" class="results errorText"></span>
 </div>
 
 </body>

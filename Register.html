@@ -50,27 +50,6 @@ function goToLogin()
         </script>
 
 <link href="css/styles.css" rel="stylesheet">
-    <style>
-
-#registerResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-    </style>	
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
@@ -82,7 +61,7 @@ select{
 	<input type="text" id="registerName" class="bigInput" placeholder="Username" /><br />
 	<input type="password" id="registerPassword" class="bigInput" placeholder="Password"/><br />
 	<input type="button" id="registerButton" class="buttons" value="Register" onclick="registerUser();">
-	<span id="registerResult"></span>
+	<span id="registerResult" class="results errorText"></span>
         <br><br>
         <input type="button" id="toLoginButton" class="buttons" value="Go to Login" onClick="goToLogin();">
 </div>

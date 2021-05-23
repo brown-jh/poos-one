@@ -40,39 +40,6 @@ function goToRegister()
         </script>
 
 <link href="css/styles.css" rel="stylesheet">
-    <style>
-
-#loginResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-#logoutButton{
-    width: 20%;
-    margin-left: 40%;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-    </style>	
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
@@ -84,7 +51,7 @@ select{
 	<input type="text" id="loginName" class="bigInput" placeholder="Username" /><br />
 	<input type="password" id="loginPassword" class="bigInput" placeholder="Password"/><br />
 	<input type="button" id="loginButton" class="buttons" value="Login" onclick="logInUser();">
-	<span id="loginResult"></span>
+	<span id="loginResult" class="results errorText"></span>
         <br><br>
         <input type="button" id="registerButton" class="buttons" value="Register" onClick="goToRegister();">
 </div>
