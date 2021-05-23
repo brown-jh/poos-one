@@ -70,12 +70,12 @@ function goBack()
 
 <div id="mainDiv">
 	<span id="inner-title">To add a new contact, please give the first and last name; <br>email and phone are optional.<br></span>
-	<input type="text" id="firstName" class="bigInput" placeholder="First name" /><br />
-        <input type="text" id="lastName" class="bigInput" placeholder="Last name" /><br />
-        <input type="text" id="phoneNumber" class="bigInput" placeholder="Phone number" /><br />
-        <input type="text" id="emailAddress" class="bigInput" placeholder="Email address" /><br />
-	<button type="button" id="checkButton" class="buttons spaced" onclick="checkContact();"> Add contact </button>
-        <button type="button" id="cancelButton" class="buttons spaced" onclick="goBack();"> Cancel </button>
+	<input type="text" id="firstName" placeholder="First name" /><br />
+        <input type="text" id="lastName" placeholder="Last name" /><br />
+        <input type="text" id="phoneNumber" placeholder="Phone number" /><br />
+        <input type="text" id="emailAddress" placeholder="Email address" /><br />
+	<input type="button" id="checkButton" class="buttons spaced" value="Add contact" onclick="checkContact();">
+        <input type="button" id="cancelButton" class="buttons spaced" value="Cancel" onclick="goBack();">
 	<span id="addResult" class="results errorText"></span>
 </div>
 

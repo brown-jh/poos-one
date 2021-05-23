@@ -37,15 +37,10 @@ body
   margin-bottom: 2%;
 }
 
-.buttons:hover{
+input[type="button"]:hover{
     background-color: #00d5124f;
     color: #FFFFFF;
     opacity: 50%;
-}
-
-.bigInput
-{
-	font-size: 30px;
 }
 
 .fullWidth
@@ -55,6 +50,7 @@ body
 }
 
 input[type="text"],input[type="password"]{
+    font-size: 30px;
     border-radius: 25px;
     text-align: center;
     width: 80%;
@@ -82,7 +78,6 @@ input[type="text"],input[type="password"]{
     margin-left: 5%;
     margin-bottom: 2%;
     font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
 }
 
 .results
@@ -116,26 +111,12 @@ input[type="text"],input[type="password"]{
     float:right;
 }
 
-#logoutButton
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 24%;
-    margin-left: 38%;
-    margin-top: 4%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#cancelButton{
+#cancelButton, #logoutButton, #toLoginButton{
     width: 20%;
     margin-left: 40%;
 }
-/* also use for logout? */
 
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
+#logoutButton
+{
+  margin-top: 4%;
 }
