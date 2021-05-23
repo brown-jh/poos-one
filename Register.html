@@ -52,50 +52,6 @@ function goToLogin()
 <link href="css/styles.css" rel="stylesheet">
     <style>
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
-#registerName
-{
-	font-size: 30px;
-}
-#registerPassword
-{
-	font-size: 30px;
-}
-
-input[type="text"],input[type="password"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
 #registerResult{
     display: inline-block;
     font-size: 0.8em;
@@ -123,8 +79,8 @@ select{
 
 <div id="mainDiv">
 	<span id="inner-title">REGISTRY PAGE</span>
-	<input type="text" id="registerName" placeholder="Username" /><br />
-	<input type="password" id="registerPassword" placeholder="Password"/><br />
+	<input type="text" id="registerName" class="bigInput" placeholder="Username" /><br />
+	<input type="password" id="registerPassword" class="bigInput" placeholder="Password"/><br />
 	<input type="button" id="registerButton" class="buttons" value="Register" onclick="registerUser();">
 	<span id="registerResult"></span>
         <br><br>

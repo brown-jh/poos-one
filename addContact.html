@@ -63,60 +63,6 @@ function goBack()
 <link href="css/styles.css" rel="stylesheet">
 <style>
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
-#firstName
-{
-	font-size: 30px;
-}
-#lastName
-{
-	font-size: 30px;
-}
-#phoneNumber
-{
-	font-size: 30px;
-}
-#emailAddress
-{
-	font-size: 30px;
-}
-
-input[type="text"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
 #addResult{
     display: inline-block;
     font-size: 0.8em;
@@ -159,12 +105,12 @@ select{
 
 <div id="mainDiv">
 	<span id="inner-title">To add a new contact, please give the first and last name; <br>email and phone are optional.<br></span>
-	<input type="text" id="firstName" placeholder="First name" /><br />
-        <input type="text" id="lastName" placeholder="Last name" /><br />
-        <input type="text" id="phoneNumber" placeholder="Phone number" /><br />
-        <input type="text" id="emailAddress" placeholder="Email address" /><br />
-	<button type="button" id="checkButton" class="buttons" onclick="checkContact();"> Add contact </button>
-        <button type="button" id="cancelButton" class="buttons" onclick="goBack();"> Cancel </button>
+	<input type="text" id="firstName" class="bigInput" placeholder="First name" /><br />
+        <input type="text" id="lastName" class="bigInput" placeholder="Last name" /><br />
+        <input type="text" id="phoneNumber" class="bigInput" placeholder="Phone number" /><br />
+        <input type="text" id="emailAddress" class="bigInput" placeholder="Email address" /><br />
+	<button type="button" id="checkButton" class="buttons spaced" onclick="checkContact();"> Add contact </button>
+        <button type="button" id="cancelButton" class="buttons spaced" onclick="goBack();"> Cancel </button>
 	<span id="addResult"></span>
 </div>
 
