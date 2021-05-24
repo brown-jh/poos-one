@@ -1,16 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 body
 {
-    background-color: #89cff0;
+    background: #00467f; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #00467f, #a5cc82); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #00467f, #a5cc82); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 
 #title 
 {
-    font-size: 40px;
+    font-size: 80px;
     width: 100%;
     text-align: center;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     color: #FFFFFF;
+    filter: drop-shadow(5px 5px 0px rgb(57, 3, 68));
 }
 
 #mainDiv
@@ -18,17 +23,20 @@ body
     font-size: 30px;
     width: 70%;
     margin-left: 15%;
-    background-color: #b2b2b2;
-    border-radius: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background: #7fe197;  /* fallback for old browsers */
+    border-radius: 10px;
+    border: 5px solid rgb(57, 3, 68);
 }
 
 .buttons
 {
     font-size: 30px;
-    border-radius: 25px;
+    border-radius: 10px;
     width: 50%;
     margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .spaced
@@ -38,9 +46,9 @@ body
 }
 
 input[type="button"]:hover{
-    background-color: #00d5124f;
+    background-color: #081dff4f;
     color: #FFFFFF;
-    opacity: 50%;
+    opacity: 90%;
 }
 
 .fullWidth
@@ -51,23 +59,23 @@ input[type="button"]:hover{
 
 input[type="text"],input[type="password"]{
     font-size: 30px;
-    border-radius: 25px;
+    border-radius: 10px;
     text-align: center;
     width: 80%;
     margin-left: 10%;
     margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
 }
 
 /* This tag is doubled so that it can override the styling for all text and password inputs above; look up specificity. */
 .searchBox.searchBox
 {
-        border-radius: 25px;
-	font-size: 20px;
+        border-radius: 10px;
+	    font-size: 20px;
         width: 22%;
         margin-left: 1%;
         margin-right: 1%;
-        font-family: 'Ubuntu', sans-serif;
+        font-family: 'Roboto Mono', monospace;
 }
 
 #inner-title{
@@ -77,7 +85,7 @@ input[type="text"],input[type="password"]{
     text-align: center;
     margin-left: 5%;
     margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .results
@@ -89,7 +97,7 @@ input[type="text"],input[type="password"]{
     margin-left: 5%;
     margin-bottom: 2%;
     margin-top: 2%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     background-color: #ffffff;
 }
 
@@ -101,13 +109,13 @@ input[type="text"],input[type="password"]{
 .smallButton
 {
     font-size: 20px;
-    border-radius: 25px;
+    border-radius: 10px;
     width: 24%;
     margin-left: 13%;
     margin-right: 13%;
     margin-top: 1%;
     margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     float:right;
 }
 
