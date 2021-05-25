@@ -1,0 +1,48 @@
+# COP 4331 - Small Project Group 25
+# Creating database for users and contacts
+
+# create database Contact_Manager;
+
+#CREATE TABLE `Contact_Manager`.`Users` 
+#( 	
+#	`ID` INT NOT NULL AUTO_INCREMENT , 
+#	`DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+#	`DateLastLoggedIn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+#	`FirstName` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	`LastName` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	`Login` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	`Password` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	PRIMARY KEY (`ID`)
+#) 
+#ENGINE = InnoDB;
+#		|
+#		V
+
+CREATE TABLE `Contact_Manager`.`Users` ( 	`ID` INT NOT NULL AUTO_INCREMENT , `DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `DateLastLoggedIn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `FirstName` VARCHAR(50) NOT NULL DEFAULT '' , `LastName` VARCHAR(50) NOT NULL DEFAULT '' , `Login` VARCHAR(50) NOT NULL DEFAULT '' , `Password` VARCHAR(50) NOT NULL DEFAULT '' , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+#CREATE TABLE `Contact_Manager`.`Contacts` 
+#( 
+#	`ID` INT NOT NULL AUTO_INCREMENT , 
+#	`FirstName` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	`LastName` VARCHAR(50) NOT NULL DEFAULT '' ,  
+#	`Email` VARCHAR(50) NOT NULL DEFAULT '' , 
+#	`PhoneNumber` VARCHAR(10) NOT NULL DEFAULT '0' ,
+#	`DateRecordCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+#	`UserID` INT NOT NULL DEFAULT '0' ,
+#	PRIMARY KEY (`ID`)
+#) 
+#ENGINE = InnoDB;
+#		|
+#		V
+
+CREATE TABLE `Contact_Manager`.`Contacts` ( `ID` INT NOT NULL AUTO_INCREMENT , `FirstName` VARCHAR(50) NOT NULL DEFAULT '' , `LastName` VARCHAR(50) NOT NULL DEFAULT '' ,  `Email` VARCHAR(50) NOT NULL DEFAULT '' , `PhoneNumber` VARCHAR(10) NOT NULL DEFAULT '0' , `DateRecordCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `UserID` INT NOT NULL DEFAULT '0' , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+# Sample Data
+#		|
+#		V
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Rick','Leinecker','RickL','COP4331');
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Sam','Hill','SamH','Test');
+
+insert into Contacts (FirstName,LastName,Email,PhoneNumber,UserID) VALUES ('Bobby','McDude','TheBob@gmail.com','1234567890',1);
+insert into Contacts (FirstName,LastName,Email,PhoneNumber,UserID) VALUES ('Eva','Gelion','EVA@hotmail.com','1234567899',2);
+insert into Contacts (FirstName,LastName,Email,PhoneNumber,UserID) VALUES ('Mark','Hamill','Empire@gmail.com','9999999999',2);
