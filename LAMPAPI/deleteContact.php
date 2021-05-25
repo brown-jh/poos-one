@@ -1,21 +1,17 @@
 <?php
-	$inData = getRequestInfo();
+	$primKey = getRequestInfo();
 	
-	$firstName = $inData["firstName"];
-	$lastName = $inData["lastName"];
-	$email = $inData["email"];
-	$phoneNumber = $inData["phoneNumber"];
-	$userId = $inData["userId"];
+	$primKey = $inData["primKey"];
 
-	$conn = new mysqli("159.203.86.224", "ManagerOfContactManager", "WeLoveContactManager", "Contact_Manager");
+	$conn = new mysqli("localhost", "ManagerOfContactManager", "WeLoveContactManager", "Contact_Manager");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $mysqli->prepare("DELETE from Contacts WHERE firstName = ? AND lastName = ? AND userId = ?);
-		$stmt->bind_param("sss", $firstName, $lastName, $userId);
+		$stmt = $mysqli->prepare("DELETE from Contacts WHERE primKey = ?);
+		$stmt->bind_param("s", $firstName, $lastName, $userId);
 		$stmt->execute();
 	}
 
