@@ -122,21 +122,46 @@ function logInUser()
   var password = document.getElementById("loginPassword").value;
   //var hash = md5( password );
 	
-  document.getElementById("loginResult").innerHTML = "";
+  document.getElementById("loginResult").innerHTML = "Logged in! Welcome";
 
   //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
   var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-  alert("TODO: Should submit to Login API:\n" + jsonPayload);
+	var url = urlBase + '/Login.' + extension;
 
-  // TODO: Do database query instead of this test data.
-  if (login == "test" && password == "password")
-  {
-    // TODO: Set up and create the cookie.
-    location.href = "mainPage.htm";
-    return;
-  }
-  // Tell the user if the login failed.
-  document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+  var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				var jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
+		
+				if( userId < 1 )
+				{		
+					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+					return;
+				}
+		
+				firstName = jsonObject.firstName;
+				lastName = jsonObject.lastName;
+
+        // Need to first implement cookies, then we can uncomment this.
+				//saveCookie();
+	
+				location.href = "mainPage.htm";
+				
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("loginResult").innerHTML = err.message;
+	}
 }
 
 // Go to the Register screen when the user clicks on the Register button.
