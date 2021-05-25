@@ -1,46 +1,12 @@
 <html>
 <head>
 	<title>Login Demo</title>
+
+  <script type="text/javascript" src="js/code.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
-// This function accepts the username and password and attempts to log in.
-function logInUser()
-{
-  var userId = 0;
-  var firstName = "";
-  var lastName = "";
-	
-  var login = document.getElementById("loginName").value;
-  var password = document.getElementById("loginPassword").value;
-  //var hash = md5( password );
-	
-  document.getElementById("loginResult").innerHTML = "";
-
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-  alert("TODO: Should submit to Login API:\n" + jsonPayload);
-
-  // TODO: Do database query instead of this test data.
-  if (login == "test" && password == "password")
-  {
-    // TODO: Set up and create the cookie.
-    location.href = "mainPage.htm";
-    return;
-  }
-  // Tell the user if the login failed.
-  document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
-}
-
-// Go to the Register screen when the user clicks on the Register button.
-function goToRegister()
-{
-  location.href = "Register.html";
-}
-        </script>
-
-<link href="css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
 

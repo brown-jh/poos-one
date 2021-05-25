@@ -1,56 +1,11 @@
 <html>
 <head>
 	<title>Register Demo</title>
+  <script type="text/javascript" src="js/code.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript">
-
-// This function accepts a username and password and attempts to register a new user.
-function registerUser()
-{
-  var userId = 0;
-  var firstName = "";
-  var lastName = "";
-	
-  var login = document.getElementById("registerName").value;
-  var password = document.getElementById("registerPassword").value;
-  //var hash = md5( password );
-	
-  document.getElementById("registerResult").innerHTML = "";
-
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-
-  // TODO: Do database query instead of this test data to check for a duplicate user.
-  if (login == "test")
-  {
-    document.getElementById("registerResult").innerHTML = "Username is already used.<br>";
-    return;
-  }
-
-  var passwdRegex = /^\w{8,}$/; //Matches a string of 8 or more alphanumerics.
-  // Check if the password is valid.
-  if (!passwdRegex.test(password))
-  {
-    document.getElementById("registerResult").innerHTML = "Password must be 8 or more numbers, letters, or underscores.";
-    return;
-  }
-  // TODO: Hash password.
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-  alert("TODO: Should submit to Register API and make cookie:\n" + jsonPayload);
-  // TODO: Database query to add the new user, and make the cookie.
-  location.href = "mainPage.htm";
-}
-
-// Go to the Register screen when the user clicks on the Register button.
-function goToLogin()
-{
-  location.href = "index.html";
-}
-        </script>
-
-<link href="css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  
 </head>
 <body>
 
