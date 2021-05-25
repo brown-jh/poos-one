@@ -16,28 +16,54 @@ function searchContacts()
   var result = document.getElementById("searchResult");
   result.innerHTML = ""; // Clear the login result field.
 
-  // TODO: This is where we would submit the request to the server.
-  result.innerHTML = "Contact(s) retrieved.<br>"
-  var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '1' + '"}';
-  alert("TODO: Should submit to search:\n" + jsonPayload);
-  
-  // This test data can substitute for the request output.
-  // It's rendered as an array of objects, each with fields for the contact data, and another for the primary key.
-  var dummyContacts = [{first:"William", last:"Tell", phone:"", email:"", primKey:10}, 
-		       {first:"Tommy", last:"Tutone", phone:"8675309", email:"", primKey:15}, 
-		       {first:"Professor", last:"Nelson", phone:"", email:"hnelson@uni.edu", primKey:45}, 
-		       {first:"Jane", last:"Smith", phone:"5555555", email:"jsmith@yahoo.com", primKey:46}];
+  // This is the array used to store the contacts.
+  var contactList = "";
 
-  // For each entry, I show a contact with the text on the left, and Update and Remove buttons on the right.
-  for (var i = 0; i < dummyContacts.length; i++)
-  {
-    result.innerHTML += makeContactFloats(dummyContacts[i], i);
-  }
-  // If no results were found, say so.
-  if (dummyContacts.length == 0)
-  {
-    result.innerHTML = "No contacts found.<br>";
-  }
+  //This is where we submit the request to the server. TODO: Update UserId to read logged in user's id, using 2 to test for now.
+  var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '2' + '"}';
+  var url = urlBase + '/SearchContact.' + extension;
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				result.innerHTML = "Contact(s) retrieved.<br>"
+				var jsonObject = JSON.parse( xhr.responseText );
+				
+        // Add the parsed JSON to the contactList array, to fill it with contacts.
+				for( var i=0; i<jsonObject.results.length; i++ )
+				{
+					contactList += jsonObject.results[i];
+					if( i < jsonObject.results.length - 1 )
+					{
+						colorList += "<br />\r\n";
+					}
+
+          // For each entry, I show a contact with the text on the left, and Update and Remove buttons on the right.
+          result.innerHTML += makeContactFloats(contactList[i], i);
+				}
+
+        // If no results were found, say so.
+        if (jsonObject.results.length == 0)
+        {
+            result.innerHTML = "No contacts found.<br>";
+        }
+		
+				document.getElementsByTagName("p")[0].innerHTML = colorList;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		result.innerHTML = err.message;
+	}
+  
 }
 
 // This function generates a piece of text and two buttons in HTML to add to the display.
