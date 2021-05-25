@@ -1,8 +1,14 @@
 <?php
     $inData = getRequestInfo();
 
+    $id = 0;
     $login = $inData['login'];
     $password = $inData['password'];
+    $firstName = $inData['firstName'];
+    $lastName = $inData['lastName'];
+    $dateCreated = "";
+    $dateLastLoggedIn = "";
+
 
 
     $databaseName = "Contact_Manager";
@@ -22,14 +28,15 @@
     {
         // Prepare a SQL command to send to the server!
 
-        $stmt = $conn->prepare("INSERT blah blah not done");
+        $stmt = $conn->prepare("INSERT into Users (ID,DateCreated,DateLastLoggedIn,FirstName,LastName,Login,Password)
+                                VALUES (?,?,?,?,?,?,?");
         // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("ss", $login, $password);
+        $stmt->bind_param("issssss",$id, $dateCreated, $dateLastLoggedIn, $firstName, $lastName, $login, $password);
         // Send the now prepared command!
         $stmt->execute();
 
 
-        
+
 
         // Close the connection
 		$stmt->close();
