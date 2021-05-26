@@ -1,4 +1,4 @@
-var urlBase = 'http://cop4331group25.xyz/LAMPAPI';
+var urlBase = 'http://www.cop4331group25.xyz/LAMPAPI';
 var extension = 'php';
 
 
