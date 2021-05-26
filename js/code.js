@@ -1,6 +1,9 @@
 var urlBase = 'http://www.cop4331group25.xyz/LAMPAPI';
 var extension = 'php';
 
+var userId = 0;
+var firstName = "";
+var lastName = "";
 
 // ** register.html **
 
