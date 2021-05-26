@@ -1,6 +1,9 @@
-var urlBase = 'http://cop4331group25.xyz/LAMPAPI';
+var urlBase = 'http://www.cop4331group25.xyz/LAMPAPI';
 var extension = 'php';
 
+var userId = 0;
+var firstName = "";
+var lastName = "";
 
 // ** register.html **
 
@@ -380,7 +383,6 @@ function logOut()
   lastName = "";
   document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
   location.href = "index.html";
-  goToLogin();
 }
 
 
