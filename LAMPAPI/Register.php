@@ -38,10 +38,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
         //$stmt = $conn->prepare("SELECT MAX(ID) FROM Users");
 
-        $stmt = $conn->prepare("INSERT into Users (FirstName,LastName,Login,Password)
-                                VALUES (?,?,?,?");
+        $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
         // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("ssss",$firstName, $lastName, $login, $password);
+        $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
         // Send the now prepared command!
         $stmt->execute();
 
@@ -50,16 +49,22 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         // Close the connection
 		$stmt->close();
 		$conn->close();
+        returnWithError("");
     } 
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"dateCreated":"", "dateLastLoggedIn":"",
-            "firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
     function getRequestInfo()
     {
         return json_decode(file_get_contents('php://input'), true);
     }
+
+    function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
 
 ?>
