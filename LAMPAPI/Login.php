@@ -8,6 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     $id = 0;
     $firstName = "";
     $lastName = "";
+    $currentTime = date("Y-m-d H:i:s");
 
     $databaseName = "Contact_Manager";
     $databaseUser = "ManagerOfContactManager";
@@ -34,6 +35,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         $stmt->bind_param("ss", $inData["login"], $inData["password"]);
         // Send the now prepared command!
         $stmt->execute();
+
+
+
+        
         // And see if we had a successful login
         $result = $stmt->get_result();
 
@@ -41,7 +46,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         if( $row = $result->fetch_assoc()  )
 		{
             loginUpdate($conn, $row);
-			returnWithInfo( $row['ID'], $row['DateCreated'], $row['DateLastLoggedIn'],
+			returnWithInfo( $row['ID'], $row['DateCreated'], $currentTime,
                             $row['firstName'], $row['lastName']);
 		}
 		else
@@ -66,12 +71,13 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 	}
 	
 
-    function loginUpdate($conn, $row)
+    function loginUpdate(&$conn, &$row)
     {
         // TODO: Update 'DateLastLoggedIn' when user logs in.
         $currentTime = date("Y-m-d H:i:s");
         $timestmt = $conn->prepare("UPDATE Users SET DateLastLoggedIn=? WHERE ID=?");
         $timestmt->bind_param("si", $currentTime, $row['ID']);
+        $timestmt->execute();
     }
 
     // If we have an error, return id as 0
