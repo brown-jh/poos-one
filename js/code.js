@@ -118,7 +118,6 @@ function checkContact()
   // If we got no errors, then we can submit the data.
   if (result.innerHTML == "")
   {
-    //TODO: Need to figure out how to send correct jsonPayload, this one is returning an error.
     var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + userId + '"}';
     var url = urlBase + '/AddContacts.' + extension;
 	
