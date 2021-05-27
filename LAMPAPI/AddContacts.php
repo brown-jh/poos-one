@@ -19,10 +19,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
     // If setting the time here the line below should do it
     // dateRecordCreated will hold date in format "May 25, 2021, 4:21pm"
-    $dateRecordCreated = date("F j, Y, g:i a");
+    // $dateRecordCreated = date("F j, Y, g:i a");
     $databaseName = "Contact_Manager";
     $databaseUser = "ManagerOfContactManager";
     $databasePassword = "WeLoveContactManager";
+	$dateCreated = "";
 
     // Connect to the sqlServer '$databaseName' on 'localhost' with the username '$databaseUser'
     // and the password '$databasePassword
@@ -36,8 +37,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 	{
         // no clue if this following line works, may have adapted it correctly but who knows
         // should insert the values into Contacts table
-		$stmt = $conn->prepare("INSERT into Contacts (FirstName, LastName, Email, PhoneNumber, DateRecordCreated, UserID) VALUES(?,?,?,?,?,?)");
-		$stmt->bind_param("ssssss", $firstName, $lastName, $email, $phoneNumber, $dateRecordCreated, $userId);
+		$stmt = $conn->prepare("INSERT into Contacts (FirstName, LastName, Email, PhoneNumber, UserID) VALUES(?,?,?,?,?)");
+		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $userId);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();

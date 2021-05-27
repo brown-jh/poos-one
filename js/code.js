@@ -14,21 +14,20 @@ function registerUser()
   firstName = "";
   lastName = "";
 	
+  var registerFirstName = document.getElementById("registerFirstName").value;
+  var registerLastName = document.getElementById("registerLastName").value;
   var login = document.getElementById("registerName").value;
   var password = document.getElementById("registerPassword").value;
   //var hash = md5( password );
 	
   document.getElementById("registerResult").innerHTML = "";
 
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-
-  // TODO: Do database query instead of this test data to check for a duplicate user.
-  if (login == "test")
-  {
-    document.getElementById("registerResult").innerHTML = "Username is already used.<br>";
-    return;
-  }
+  // TODO: Do database query instead of this test data to check for a duplicate user. (If we have time!)
+  // if (login == "test")
+  // {
+  //   document.getElementById("registerResult").innerHTML = "Username is already used.<br>";
+  //   return;
+  // }
 
   var passwdRegex = /^\w{8,}$/; //Matches a string of 8 or more alphanumerics.
   // Check if the password is valid.
@@ -38,11 +37,38 @@ function registerUser()
     return;
   }
   // TODO: Hash password.
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-  alert("TODO: Should submit to Register API and make cookie:\n" + jsonPayload);
-  // TODO: Database query to add the new user, and make the cookie.
-  location.href = "mainPage.htm";
+  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
+  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
+  var url = urlBase + '/Register.' + extension;
+
+  // Connects to server and sends jsonPayload containing user information.
+  var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				var jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
+		
+				firstName = jsonObject.firstName;
+				lastName = jsonObject.lastName;
+ 
+				saveCookie();
+	
+				location.href = "mainPage.htm";
+				
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
 }
 
 // Go to the Register screen when the user clicks on the Register button.
@@ -92,10 +118,11 @@ function checkContact()
   // If we got no errors, then we can submit the data.
   if (result.innerHTML == "")
   {
-    // TODO: This is where we would submit the request to the server. Need to figure
-    var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + '2' + '"}';
+    //TODO: Need to figure out how to send correct jsonPayload, this one is returning an error.
+    var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + userId + '"}';
     var url = urlBase + '/AddContacts.' + extension;
 	
+    // Connects to server and sends jsonPayload containing user information.
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -149,6 +176,8 @@ function logInUser()
   var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
 
+  // Connects to server and sends jsonPayload containing user information, checking if User/Password
+  // combo is correct.
   var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -212,9 +241,10 @@ function searchContacts()
   result.innerHTML = ""; // Clear the login result field.
 
   //This is where we submit the request to the server. TODO: Update UserId to read logged in user's id, using 2 to test for now.
-  var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + '2' + '"}';
+  var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + userId + '"}';
   var url = urlBase + '/SearchContact.' + extension;
 
+  // Connects to server and sends jsonPayload containing user information.
   var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -371,7 +401,7 @@ function acceptUpdate(entries, index)
   if (result.innerHTML == "")
   {
     // TODO: This is where we would submit the request to the server.
-    var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '1' + '", "primKey": ' + entries[index].primKey + '}';
+    var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + userId + '", "primKey": ' + entries[index].primKey + '}';
     alert("TODO: Should submit to update:\n" + jsonPayload);
     
     // Update the local version of the entry. First we make the new contact info.
