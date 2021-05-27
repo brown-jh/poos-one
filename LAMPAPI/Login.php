@@ -40,7 +40,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         // Now that we have our results, lets return the user if it existed.
         if( $row = $result->fetch_assoc()  )
 		{
-            //loginUpdate($conn);
+            loginUpdate($conn, $row);
 			returnWithInfo( $row['ID'], $row['DateCreated'], $row['DateLastLoggedIn'],
                             $row['firstName'], $row['lastName']);
 		}
@@ -66,11 +66,12 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 	}
 	
 
-    function loginUpdate($conn)
+    function loginUpdate($conn, $row)
     {
         // TODO: Update 'DateLastLoggedIn' when user logs in.
-        $currentTime = date('Y-m-d');
+        $currentTime = date("Y-m-d H:i:s");
         $timestmt = $conn->prepare("UPDATE Users SET DateLastLoggedIn=? WHERE ID=?");
+        $timestmt->bind_param("si", $currentTime, $row['ID']);
     }
 
     // If we have an error, return id as 0
