@@ -239,7 +239,7 @@ function searchContacts()
   var result = document.getElementById("searchResult");
   result.innerHTML = ""; // Clear the login result field.
 
-  //This is where we submit the request to the server. TODO: Update UserId to read logged in user's id, using 2 to test for now.
+  //This is where we submit the request to the server.
   var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + userId + '"}';
   var url = urlBase + '/SearchContact.' + extension;
 
