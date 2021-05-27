@@ -29,15 +29,21 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     // make the user if connection was successful
     else
     {
+        // Set the date created!
+        // EDIT: This is not needed, I'm dumb
+        // we set up the sqlserver so that it auto sets date created.
+        //$dateCreated = date("Y-m-d H:i:s");
+        //$dateLastLoggedIn = $dateCreated;
         // Prepare a SQL command to send to the server!
 
-        $stmt = $conn->prepare("INSERT into Users (ID,DateCreated,DateLastLoggedIn,FirstName,LastName,Login,Password)
-                                VALUES (?,?,?,?,?,?,?");
+        //$stmt = $conn->prepare("SELECT MAX(ID) FROM Users");
+
+        $stmt = $conn->prepare("INSERT into Users (FirstName,LastName,Login,Password)
+                                VALUES (?,?,?,?");
         // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("issssss",$id, $dateCreated, $dateLastLoggedIn, $firstName, $lastName, $login, $password);
+        $stmt->bind_param("ssss",$firstName, $lastName, $login, $password);
         // Send the now prepared command!
         $stmt->execute();
-
 
 
 
@@ -45,6 +51,15 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 		$stmt->close();
 		$conn->close();
     } 
-
+	function returnWithError( $err )
+	{
+		$retValue = '{"id":0,"dateCreated":"", "dateLastLoggedIn":"",
+            "firstName":"","lastName":"","error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+    function getRequestInfo()
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
 
 ?>
