@@ -10,9 +10,9 @@ var lastName = "";
 
 function registerUser()
 {
-  var userId = 0;
-  var firstName = "";
-  var lastName = "";
+  userId = 0;
+  firstName = "";
+  lastName = "";
 	
   var login = document.getElementById("registerName").value;
   var password = document.getElementById("registerPassword").value;
@@ -92,17 +92,36 @@ function checkContact()
   // If we got no errors, then we can submit the data.
   if (result.innerHTML == "")
   {
-    // First clear the textboxes.
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
-    document.getElementById("phoneNumber").value = "";
-    document.getElementById("emailAddress").value = "";
-
-    // TODO: This is where we would submit the request to the server.
-    result.innerHTML = "New contact added."
-    var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '1' + '"}';
-    alert("TODO: Should submit:\n" + jsonPayload);
+    // TODO: This is where we would submit the request to the server. Need to figure
+    var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + '2' + '"}';
+    var url = urlBase + '/AddContacts.' + extension;
+	
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+      xhr.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+          result.innerHTML = "New contact added."
+        }
+      };
+      xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+      result.innerHTML = err.message;
+    }
+    
   }
+
+  document.getElementById("firstName").value = "";
+  document.getElementById("lastName").value = "";
+  document.getElementById("phoneNumber").value = "";
+  document.getElementById("emailAddress").value = "";
+  
 }
 
 // Return the user to the main page when they click Cancel.
@@ -117,15 +136,14 @@ function goBack()
 
 function logInUser()
 {
-  var userId = 0;
-  var firstName = "";
-  var lastName = "";
+
+  userId = 0;
+  firstName = "";
+  lastName = "";
 	
   var login = document.getElementById("loginName").value;
   var password = document.getElementById("loginPassword").value;
   //var hash = md5( password );
-	
-  document.getElementById("loginResult").innerHTML = "Logged in! Welcome";
 
   //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
   var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
@@ -152,7 +170,8 @@ function logInUser()
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
-        
+        document.getElementById("loginResult").innerHTML = "Logged in! Welcome";
+ 
 				saveCookie();
 	
 				location.href = "mainPage.htm";
@@ -177,10 +196,10 @@ function goToRegister()
 // ** mainPage.html **
 
 
-// This global variable holds the list of results produced by a search.
-var searchList;
+// This is the array used to store the contacts.
+var contactList = [];
 
-// TODO: Implement the JSON and such when the APIs are ready.
+// Searches through the contacts and returns found contacts for you to edit/remove.
 function searchContacts()
 {
   // First get the data from the user.
@@ -192,31 +211,50 @@ function searchContacts()
   var result = document.getElementById("searchResult");
   result.innerHTML = ""; // Clear the login result field.
 
-  // TODO: This is where we would submit the request to the server.
-  result.innerHTML = "Contact(s) retrieved.<br>"
-  var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + '1' + '"}';
-  alert("TODO: Should submit to search:\n" + jsonPayload);
-  
-  // This test data can substitute for the request output.
-  // It's rendered as an array of objects, each with fields for the contact data, and another for the primary key.
-  var dummyContacts = [{first:"William", last:"Tell", phone:"", email:"", primKey:10}, 
-		       {first:"Tommy", last:"Tutone", phone:"8675309", email:"", primKey:15}, 
-		       {first:"Professor", last:"Nelson", phone:"", email:"hnelson@uni.edu", primKey:45}, 
-		       {first:"Jane", last:"Smith", phone:"5555555", email:"jsmith@yahoo.com", primKey:46}];
+  //This is where we submit the request to the server. TODO: Update UserId to read logged in user's id, using 2 to test for now.
+  var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + '2' + '"}';
+  var url = urlBase + '/SearchContact.' + extension;
 
-  // First we assign it to the global so that I can access it from outside this function.
-  searchList = dummyContacts;
+  var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+        result.innerHTML = "Contact(s) retrieved.<br>"
+                
+        // Updates the contactList array from database, each array index is a contact.
+				var jsonObject = JSON.parse( xhr.responseText );
+				for( var i=0; i<Object.keys(jsonObject).length; i++ )
+				{
+					contactList[i] = jsonObject[i];
+				}
+        
+        // If no results were found, say so.
+        if (jsonObject.id == 0)
+        {
+          result.innerHTML = "No contacts found.<br>";
+          return;
+        }
 
-  // For each entry, I show a contact with the text on the left, and Update and Remove buttons on the right.
-  for (var i = 0; i < searchList.length; i++)
-  {
-    result.innerHTML += makeContactFloats(searchList, i);
-  }
-  // If no results were found, say so.
-  if (searchList.length == 0)
-  {
-    result.innerHTML = "No contacts found.<br>";
-  }
+        // For each entry, I show a contact with the text on the left, and Update and Remove buttons on the right.
+        for (var i = 0; i < Object.keys(jsonObject).length; i++)
+        {
+          result.innerHTML += makeContactFloats(contactList, i);
+        }
+				
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		result.innerHTML = err.message;
+	}
+	
 }
 
 // This function dynamically generates some HTML to add to the display. It contains two spans; one shows the contact data,
@@ -224,19 +262,19 @@ function searchContacts()
 function makeContactFloats(entries, index)
 {
   // First make the contact information.
-  var contactInfo = entries[index].first + " " + entries[index].last;
-  if (entries[index].phone != "")
+  var contactInfo = entries[index].FirstName + " " + entries[index].LastName;
+  if (entries[index].PhoneNumber != "")
   {
-    contactInfo += ", " + entries[index].phone;
+    contactInfo += ", " + entries[index].PhoneNumber;
   }
 
-  if (entries[index].email != "")
+  if (entries[index].Email != "")
   {
-    contactInfo += ", " + entries[index].email;
+    contactInfo += ", " + entries[index].Email;
   }
 
   // Next make the parameter lists for the onClick functions. Both need the list of search entries and the index.
-  var params = "searchList, " + index;
+  var params = "contactList, " + index;
 
   // Then we need to give a name to the divs to reference them later.
   var divName1 = "entryDiv" + index;
@@ -281,10 +319,10 @@ function updateContact(entries, index)
   document.getElementById("updateDiv" + index).style.display = "block";
 
   // Copy the original data in the contact to the search boxes.
-  document.getElementById("first" + index).value = entries[index].first;
-  document.getElementById("last" + index).value = entries[index].last;
-  document.getElementById("phone" + index).value = entries[index].phone;
-  document.getElementById("email" + index).value = entries[index].email;
+  document.getElementById("first" + index).value = entries[index].FirstName;
+  document.getElementById("last" + index).value = entries[index].LastName;
+  document.getElementById("phone" + index).value = entries[index].PhoneNumber;
+  document.getElementById("email" + index).value = entries[index].Email;
 }
 
 // Get rid of the update interface when the user clicks Cancel.

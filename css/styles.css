@@ -2,9 +2,7 @@
 
 body
 {
-    background: #00467f; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #00467f, #a5cc82); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #00467f, #a5cc82); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-image: linear-gradient(0deg, rgb(92, 92, 92),rgb(9, 9, 9)),linear-gradient(22.5deg, rgb(30, 105, 176) 0%, rgb(30, 105, 176) 58%,rgb(74, 127, 188) 58%, rgb(74, 127, 188) 63%,rgb(118, 149, 200) 63%, rgb(118, 149, 200) 69%,rgb(162, 172, 213) 69%, rgb(162, 172, 213) 90%,rgb(206, 194, 225) 90%, rgb(206, 194, 225) 97%,rgb(250, 216, 237) 97%, rgb(250, 216, 237) 100%),linear-gradient(0deg, rgb(30, 105, 176) 0%, rgb(30, 105, 176) 58%,rgb(74, 127, 188) 58%, rgb(74, 127, 188) 63%,rgb(118, 149, 200) 63%, rgb(118, 149, 200) 69%,rgb(162, 172, 213) 69%, rgb(162, 172, 213) 90%,rgb(206, 194, 225) 90%, rgb(206, 194, 225) 97%,rgb(250, 216, 237) 97%, rgb(250, 216, 237) 100%),linear-gradient(45deg, rgb(30, 105, 176) 0%, rgb(30, 105, 176) 58%,rgb(74, 127, 188) 58%, rgb(74, 127, 188) 63%,rgb(118, 149, 200) 63%, rgb(118, 149, 200) 69%,rgb(162, 172, 213) 69%, rgb(162, 172, 213) 90%,rgb(206, 194, 225) 90%, rgb(206, 194, 225) 97%,rgb(250, 216, 237) 97%, rgb(250, 216, 237) 100%); background-blend-mode:overlay, overlay, overlay, normal;
 }
 
 
@@ -25,9 +23,9 @@ body
     margin-left: 15%;
     padding-top: 25px;
     padding-bottom: 25px;
-    background: #7fe197;  /* fallback for old browsers */
-    border-radius: 10px;
-    border: 5px solid rgb(57, 3, 68);
+    background: #7fd5e1;
+    border-radius: 10px;  /* fallback for old browsers */
+    filter: drop-shadow(5px 5px 0px rgb(57, 3, 68));
 }
 
 .buttons
