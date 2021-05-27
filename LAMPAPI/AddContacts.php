@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *');
 
 
 // insert into Contacts (FirstName, LastName, Email, Phone, UserID) VALUES ('','','','','')
