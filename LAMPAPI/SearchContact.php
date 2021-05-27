@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *');
 
 	$inData = getRequestInfo();
 	
@@ -21,11 +21,11 @@
 	{
 		// Grabs contact(s) from Contacts table where FirstName, LastName, Email, or Phone Number are similar and UserID matches the current logged in user.
 		$stmt = $conn->prepare("SELECT * from Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR PhoneNumber LIKE ?) AND UserID=?");
-		$firstName = "%" . $inData["FirstName"] . "%";
-		$lastName = "%" . $inData["LastName"] . "%";
-		$email = "%" . $inData["Email"] . "%";
-		$phoneNumber = "%" . $inData["PhoneNumber"] . "%";
-		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $inData["UserID"]);
+		$firstName = "%" . $inData["firstName"] . "%";
+		$lastName = "%" . $inData["lastName"] . "%";
+		$email = "%" . $inData["email"] . "%";
+		$phoneNumber = "%" . $inData["phoneNumber"] . "%";
+		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $inData["userId"]);
 
 		$stmt->execute();
 		
