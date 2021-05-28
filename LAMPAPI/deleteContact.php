@@ -4,24 +4,27 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 	$primKey = getRequestInfo();
 	
-	$primKey = $inData["primKey"];
+	$userId = $inData["userId"];
 
-	$conn = new mysqli("localhost", "ManagerOfContactManager", "WeLoveContactManager", "Contact_Manager");
+	$databaseName = "Contact_Manager";
+    $databaseUser = "ManagerOfContactManager";
+    $databasePassword = "WeLoveContactManager";
+	$dateCreated = "";
+
+	$conn = new mysqli("localhost", "$databaseUser",  "$databasePassword", "$databaseName");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $mysqli->prepare("DELETE from Contacts WHERE primKey = ?);
-		$stmt->bind_param("s", $firstName, $lastName, $userId);
+		$stmt = $mysqli->prepare("DELETE FROM Contacts WHERE UserID = ?);
+		$stmt->bind_param("s", $userId);
 		$stmt->execute();
+		$stmt->close();
+		$conn->close();
+		returnWithError("");
 	}
-
-	$stmt->close();
-	$conn->close();
-	
-	returnWithError("");
 	
 	function getRequestInfo()
 	{
