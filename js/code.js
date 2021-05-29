@@ -59,7 +59,8 @@ function registerUser()
  
 				saveCookie();
 	
-				location.href = "mainPage.htm";
+        // Sends user back to main menu where they must log in again
+				location.href = "index.htm";
 				
 			}
 		};
@@ -435,9 +436,9 @@ function deleteContact(entries, index)
 {
   if(confirm("Do you want to delete this contact?"))
   {
-    var primKey = entries[index].primKey;
+    var primKey = entries[index].ID;
     
-    var jsonPayload = '{"contactID" : "' + primKey + '"}';
+    var jsonPayload = '{"ID" : "' + primKey + '"}';
     var url = urlBase + '/deleteContact.' + extension;
 
     var xhr = new XMLHttpRequest();
