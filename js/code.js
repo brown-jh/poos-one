@@ -436,7 +436,29 @@ function deleteContact(entries, index)
   if(confirm("Do you want to delete this contact?"))
   {
     var primKey = entries[index].primKey;
-    alert("TODO: Tell the database to delete the entry with key " + primKey + ".");
+    
+    var jsonPayload = '{"contactID" : "' + primKey + '"}';
+    var url = urlBase + '/deleteContact.' + extension;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+      xhr.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+          result.innerHTML = "Contact Deleted."
+        }
+      };
+      xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+      result.innerHTML = err.message;
+    }
 
     // Remove the entry referred to by setting its display to none.
     document.getElementById("entryDiv" + index).style.display = "none";
