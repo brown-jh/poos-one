@@ -342,22 +342,32 @@ function goToAdd()
 }
 
 // TODO: This function needs database access.
+// Determines if the user is currently updating a contact or not.
+var currentlyUpdating = new Boolean(false);
 function updateContact(entries, index)
 {
-  // Bring up the update interface by switching which div is displayed.
-  document.getElementById("entryDiv" + index).style.display = "none";
-  document.getElementById("updateDiv" + index).style.display = "block";
+  if (currentlyUpdating == false)
+  {
+    currentlyUpdating = true;
 
-  // Copy the original data in the contact to the search boxes.
-  document.getElementById("first" + index).value = entries[index].FirstName;
-  document.getElementById("last" + index).value = entries[index].LastName;
-  document.getElementById("phone" + index).value = entries[index].PhoneNumber;
-  document.getElementById("email" + index).value = entries[index].Email;
+    // Bring up the update interface by switching which div is displayed.
+    document.getElementById("entryDiv" + index).style.display = "none";
+    document.getElementById("updateDiv" + index).style.display = "block";
+
+    // Copy the original data in the contact to the search boxes.
+    document.getElementById("first" + index).value = entries[index].FirstName;
+    document.getElementById("last" + index).value = entries[index].LastName;
+    document.getElementById("phone" + index).value = entries[index].PhoneNumber;
+    document.getElementById("email" + index).value = entries[index].Email;
+  }
+  
 }
 
 // Get rid of the update interface when the user clicks Cancel.
 function cancelUpdate(index)
 {
+  currentlyUpdating = false;
+
   document.getElementById("entryDiv" + index).style.display = "block";
   document.getElementById("updateDiv" + index).style.display = "none";
 }
@@ -365,6 +375,8 @@ function cancelUpdate(index)
 // Update an entry when the user clicks Accept in the update interface.
 function acceptUpdate(entries, index)
 {
+  currentlyUpdating = false;
+
   // Get the new contact info from the text boxes.
   var first = document.getElementById("first" + index).value;
   var last = document.getElementById("last" + index).value;
@@ -431,7 +443,7 @@ function acceptUpdate(entries, index)
   }
 }
 
-// TODO: Remove a contact after warning the user.
+// Remove a contact after warning the user.
 function deleteContact(entries, index)
 {
   if(confirm("Do you want to delete this contact?"))
