@@ -60,7 +60,7 @@ function registerUser()
 				saveCookie();
 	
         // Sends user back to main menu where they must log in again
-				location.href = "index.htm";
+				location.href = "index.html";
 				
 			}
 		};
@@ -231,6 +231,9 @@ var contactList = [];
 // Searches through the contacts and returns found contacts for you to edit/remove.
 function searchContacts()
 {
+
+  currentlyUpdating = false;
+  
   // First get the data from the user.
   var first = document.getElementById("firstSearch").value;
   var last = document.getElementById("lastSearch").value;
