@@ -18,7 +18,7 @@ function registerUser()
   var registerLastName = document.getElementById("registerLastName").value;
   var login = document.getElementById("registerName").value;
   var password = document.getElementById("registerPassword").value;
-  //var hash = md5( password );
+  var hash = md5( password );
 	
   document.getElementById("registerResult").innerHTML = "";
 
@@ -29,16 +29,16 @@ function registerUser()
   //   return;
   // }
 
-  var passwdRegex = /^\w{8,}$/; //Matches a string of 8 or more alphanumerics.
+  var passwdRegex = /^\w{8,}$/; // Matches a string of 8 or more alphanumerics.
   // Check if the password is valid.
   if (!passwdRegex.test(password))
   {
     document.getElementById("registerResult").innerHTML = "Password must be 8 or more numbers, letters, or underscores.";
     return;
   }
-  // TODO: Hash password.
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
+
+  var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
+  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
   var url = urlBase + '/Register.' + extension;
 
   // Connects to server and sends jsonPayload containing user information.
@@ -114,7 +114,7 @@ function checkContact()
     result.innerHTML += "Email must be of the form name@site.foo. <br>";
   }
 
-  //TODO: Also check if the entry is duplicate?
+  //TODO: Also check if the entry is a duplicate of a (different) preexisting entry? (If we have time!)
 
   // If we got no errors, then we can submit the data.
   if (result.innerHTML == "")
@@ -170,10 +170,10 @@ function logInUser()
 	
   var login = document.getElementById("loginName").value;
   var password = document.getElementById("loginPassword").value;
-  //var hash = md5( password );
+  var hash = md5( password );
 
-  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
-  var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
+  var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
+  //var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
 
   // Connects to server and sends jsonPayload containing user information, checking if User/Password
@@ -231,8 +231,8 @@ var contactList = [];
 // Searches through the contacts and returns found contacts for you to edit/remove.
 function searchContacts()
 {
-
-  currentlyUpdating = false;
+  // Start with all the update interfaces closed.
+  currentlyUpdating = -1;
   
   // First get the data from the user.
   var first = document.getElementById("firstSearch").value;
@@ -273,7 +273,7 @@ function searchContacts()
           return;
         }
 
-        // For each entry, I show a contact with the text on the left, and Update and Remove buttons on the right.
+        // For each entry, I show a contact with the contact's info formatted, and Update and Remove buttons below.
         for (var i = 0; i < Object.keys(jsonObject).length; i++)
         {
           result.innerHTML += makeContactFloats(contactList, i);
@@ -332,7 +332,7 @@ function makeContactFloats(entries, index)
 		'" class="searchBox" placeholder="Last name"><input type="text" id="' + phoneBox + 
 		'" class="searchBox" placeholder="Phone number"><input type="text" id="' + emailBox + 
 '" class="searchBox" placeholder="Email address"></span><span class="fullWidth"><input type=button value="Cancel" class="smallButton" onClick="cancelUpdate(' + 
-index + ');"><input type=button value="Accept" class="smallButton" onClick="acceptUpdate(' + params + ');"></span><span id="' + spanName + 
+index + ');"><input type=button value="Confirm" class="smallButton" onClick="acceptUpdate(' + params + ');"></span><span id="' + spanName + 
 '" class="results errorText"></div>';
 
   return div1 + div2;
@@ -344,14 +344,19 @@ function goToAdd()
   location.href = "addContact.html";
 }
 
-// TODO: This function needs database access.
-// Determines if the user is currently updating a contact or not.
-var currentlyUpdating = new Boolean(false);
+// Determines which contact the user is currently updating; -1 is none of them.
+var currentlyUpdating = -1;
+
+// Opens up the update interface when the user clicks Update.
 function updateContact(entries, index)
 {
-  if (currentlyUpdating == false)
+  // If another update interface is already open, close it.
+  if (currentlyUpdating != -1)
   {
-    currentlyUpdating = true;
+    document.getElementById("entryDiv" + currentlyUpdating).style.display = "block";
+    document.getElementById("updateDiv" + currentlyUpdating).style.display = "none";
+  }
+  currentlyUpdating = index;
 
     // Bring up the update interface by switching which div is displayed.
     document.getElementById("entryDiv" + index).style.display = "none";
@@ -362,14 +367,12 @@ function updateContact(entries, index)
     document.getElementById("last" + index).value = entries[index].LastName;
     document.getElementById("phone" + index).value = entries[index].PhoneNumber;
     document.getElementById("email" + index).value = entries[index].Email;
-  }
-  
 }
 
 // Get rid of the update interface when the user clicks Cancel.
 function cancelUpdate(index)
 {
-  currentlyUpdating = false;
+  currentlyUpdating = -1;
 
   document.getElementById("entryDiv" + index).style.display = "block";
   document.getElementById("updateDiv" + index).style.display = "none";
@@ -378,7 +381,6 @@ function cancelUpdate(index)
 // Update an entry when the user clicks Accept in the update interface.
 function acceptUpdate(entries, index)
 {
-  currentlyUpdating = false;
 
   // Get the new contact info from the text boxes.
   var first = document.getElementById("first" + index).value;
@@ -441,6 +443,7 @@ function acceptUpdate(entries, index)
     entries[index].email = email;
 
     // Finally, switch away from the update interface.
+    currentlyUpdating = -1;
     document.getElementById("entryDiv" + index).style.display = "block";
     document.getElementById("updateDiv" + index).style.display = "none";
   }
