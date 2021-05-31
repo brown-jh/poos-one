@@ -1,10 +1,14 @@
-<?php
+<?php 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 
     $inData = getRequestInfo();
     
     $id = 0;
     $firstName = "";
     $lastName = "";
+    $currentTime = date("Y-m-d H:i:s");
 
     $databaseName = "Contact_Manager";
     $databaseUser = "ManagerOfContactManager";
@@ -31,14 +35,18 @@
         $stmt->bind_param("ss", $inData["login"], $inData["password"]);
         // Send the now prepared command!
         $stmt->execute();
+
+
+
+        
         // And see if we had a successful login
         $result = $stmt->get_result();
 
         // Now that we have our results, lets return the user if it existed.
         if( $row = $result->fetch_assoc()  )
 		{
-            //loginUpdate($conn);
-			returnWithInfo( $row['ID'], $row['DateCreated'], $row['DateLastLoggedIn'],
+            loginUpdate($conn, $row);
+			returnWithInfo( $row['ID'], $row['DateCreated'], $currentTime,
                             $row['firstName'], $row['lastName']);
 		}
 		else
@@ -63,11 +71,13 @@
 	}
 	
 
-    function loginUpdate($conn)
+    function loginUpdate(&$conn, &$row)
     {
         // TODO: Update 'DateLastLoggedIn' when user logs in.
-        $currentTime = date('Y-m-d');
+        $currentTime = date("Y-m-d H:i:s");
         $timestmt = $conn->prepare("UPDATE Users SET DateLastLoggedIn=? WHERE ID=?");
+        $timestmt->bind_param("si", $currentTime, $row['ID']);
+        $timestmt->execute();
     }
 
     // If we have an error, return id as 0

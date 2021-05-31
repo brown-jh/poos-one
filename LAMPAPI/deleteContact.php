@@ -1,24 +1,31 @@
-<?php
-	$primKey = getRequestInfo();
-	
-	$primKey = $inData["primKey"];
+<?php 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 
-	$conn = new mysqli("localhost", "ManagerOfContactManager", "WeLoveContactManager", "Contact_Manager");
+	$inData = getRequestInfo();
+
+	$databaseName = "Contact_Manager";
+    $databaseUser = "ManagerOfContactManager";
+    $databasePassword = "WeLoveContactManager";
+	$dateCreated = "";
+
+	$conn = new mysqli("localhost", "$databaseUser",  "$databasePassword", "$databaseName"); 
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $mysqli->prepare("DELETE from Contacts WHERE primKey = ?);
-		$stmt->bind_param("s", $firstName, $lastName, $userId);
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE ID=?");
+		$stmt->bind_param("s", $inData["ID"]);
 		$stmt->execute();
-	}
+		$stmt->close();
+		$conn->close();
+		
+        returnWithError($inData["ID"]);
 
-	$stmt->close();
-	$conn->close();
-	
-	returnWithError("");
+	}
 	
 	function getRequestInfo()
 	{
@@ -33,7 +40,7 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"error":"' . $err . '"}';
+		$retValue = '{"ID":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
