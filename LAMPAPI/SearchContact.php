@@ -22,8 +22,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 	} 
 	else
 	{
-		// Grabs contact(s) from Contacts table where FirstName, LastName, Email, or Phone Number are similar and UserID matches the current logged in user.
-		$stmt = $conn->prepare("SELECT * from Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR PhoneNumber LIKE ?) AND UserID=?");
+		// Grabs contact(s) from Contacts table where FirstName, LastName, Email, and Phone Number are similar and UserID matches the current logged in user.
+		$stmt = $conn->prepare("SELECT * from Contacts WHERE FirstName LIKE ? AND LastName LIKE ? AND Email LIKE ? AND PhoneNumber LIKE ? AND UserID=?");
 		$firstName = "%" . $inData["firstName"] . "%";
 		$lastName = "%" . $inData["lastName"] . "%";
 		$email = "%" . $inData["email"] . "%";
