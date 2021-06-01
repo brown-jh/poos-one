@@ -81,7 +81,6 @@ function goToLogin()
 
 // ** addContact.html **
 
-
 function checkContact()
 {
   // Get the data the user entered.
@@ -199,7 +198,7 @@ function logInUser()
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
-        document.getElementById("loginResult").innerHTML = "Logged in! Welcome";
+        document.getElementById("loginResult").innerHTML = "Logged in! Welcome!";
  
 				saveCookie();
 	
@@ -224,6 +223,11 @@ function goToRegister()
 
 // ** mainPage.html **
 
+// Triggers from an onLoad function for mainPage.html, updating the name of the logged in user.
+function updateName()
+{
+  document.getElementById("inner-title").innerHTML = "Hello, " + firstName + "! To search a contact, enter in their credentials and press search. Otherwise, to add a contact, please click the button below."
+}
 
 // This is the array used to store the contacts.
 var contactList = [];
@@ -379,9 +383,9 @@ function cancelUpdate(index)
 }
 
 // Update an entry when the user clicks Accept in the update interface.
+// Update an entry when the user clicks Accept in the update interface.
 function acceptUpdate(entries, index)
 {
-
   // Get the new contact info from the text boxes.
   var first = document.getElementById("first" + index).value;
   var last = document.getElementById("last" + index).value;
@@ -390,7 +394,6 @@ function acceptUpdate(entries, index)
 
   var result = document.getElementById("results" + index);
   result.innerHTML = ""; // Clear the update result field.
-  
 
   // Check for invalid data: either missing names, invalid phone, or invalid email.
   // Since the email and phone are optional, don't check them if empty.
@@ -412,35 +415,56 @@ function acceptUpdate(entries, index)
     result.innerHTML += "Email must be of the form name@site.foo. <br>";
   }
 
-  //TODO: Also check if the entry is duplicate?
-
+  //TODO: Also check if the entry is duplicate? (If we have time.)
+    
   // If we got no errors, then we can submit the data.
   if (result.innerHTML == "")
   {
-    // TODO: This is where we would submit the request to the server.
-    var jsonPayload = '{"first" : "' + first + '", "last" : "' + last + '", "phone" : "' + phone + '", "email" : "' + email + '", "userID" : "' + userId + '", "primKey": ' + entries[index].primKey + '}';
-    alert("TODO: Should submit to update:\n" + jsonPayload);
-    
-    // Update the local version of the entry. First we make the new contact info.
-    var contactInfo = first + " " + last;
-    if (phone != "")
+    //This is where we submit the request to the server.
+    var primKey = entries[index].ID;
+
+    var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "email" : "' + email + '", "phoneNumber" : "' + phone + '", "ID" : "' + primKey + '"}';
+
+    var url = urlBase + '/editContact.' + extension;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
     {
-      contactInfo += ", " + phone;
-    }
+      xhr.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+            // Update the local version of the entry. First we make the new contact info.
+            var contactInfo = first + " " + last;
+            if (phone != "")
+            {
+              contactInfo += ", " + phone;
+            }
 
-    if (email != "")
+            if (email != "")
+            {
+              contactInfo += ", " + email;
+            }
+
+            // Then we find the paragraph where the contact info goes and replace it.
+            document.getElementById("contactInfo" + index).innerHTML = contactInfo;
+
+            // Replace the data in the array as well, for the next update.
+            entries[index].first = first;
+            entries[index].last = last;
+            entries[index].phone = phone;
+            entries[index].email = email;
+        }
+      };
+      xhr.send(jsonPayload);
+    }
+    catch(err)
     {
-      contactInfo += ", " + email;
+      result.innerHTML = err.message;
     }
-
-    // Then we find the paragraph where the contact info goes and replace it.
-    document.getElementById("contactInfo" + index).innerHTML = contactInfo;
-
-    // Replace the data in the array as well, for the next update.
-    entries[index].first = first;
-    entries[index].last = last;
-    entries[index].phone = phone;
-    entries[index].email = email;
 
     // Finally, switch away from the update interface.
     currentlyUpdating = -1;
