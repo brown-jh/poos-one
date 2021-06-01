@@ -81,7 +81,6 @@ function goToLogin()
 
 // ** addContact.html **
 
-
 function checkContact()
 {
   // Get the data the user entered.
@@ -224,6 +223,11 @@ function goToRegister()
 
 // ** mainPage.html **
 
+// Triggers from an onLoad function for mainPage.html, updating the name of the logged in user.
+function updateName()
+{
+  document.getElementById("inner-title").innerHTML = "Hello, " + firstName + "! To search a contact, enter in their credentials and press search. Otherwise, to add a contact, please click the button below."
+}
 
 // This is the array used to store the contacts.
 var contactList = [];
