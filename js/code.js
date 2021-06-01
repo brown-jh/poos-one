@@ -199,7 +199,7 @@ function logInUser()
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
-        document.getElementById("loginResult").innerHTML = "Logged in! Welcome";
+        document.getElementById("loginResult").innerHTML = "Logged in! Welcome!";
  
 				saveCookie();
 	
