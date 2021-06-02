@@ -96,6 +96,7 @@ input[type="text"],input[type="password"]{
     margin-left: 5%;
     margin-bottom: 2%;
     margin-top: 2%;
+    border-radius: 25px;
     font-family: 'Roboto Mono', monospace;
     background-color: #ffffff;
 }
