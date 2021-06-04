@@ -77,6 +77,11 @@ input[type="text"],input[type="password"]{
         font-family: 'Roboto Mono', monospace;
 }
 
+hr
+{
+	border-top: 2px solid;
+}
+
 #inner-title{
     display: inline-block;
     font-size: 0.8em;
