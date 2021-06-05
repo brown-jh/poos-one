@@ -194,7 +194,7 @@ function logInUser()
 		
         firstName = jsonObject.firstName;
         lastName = jsonObject.lastName;
-        document.getElementById("loginResult").innerHTML = "Logged in! Welcome!";
+        document.getElementById("loginResult").innerHTML = "Logged in! Welcome.";
         saveCookie();
         location.href = "mainPage.htm";
       }
@@ -325,14 +325,14 @@ function makeContactFloats(entries, index)
 
   // Now plug all these into the HTML.
   var div1 = '<div id="' + divName1 + '"><p id="' + paraName + '">' + contactInfo + 
-			'</p><span class="fullWidth"><input type=button value="Delete" class="smallButton" onClick="deleteContact(' + 
-			params + ');"><input type=button value="Edit" class="smallButton" onClick="updateContact(' + params + ');"></span></div>';
+			'</p><span class="fullWidth"><input type=button value="Delete ☓" class="smallButton" onClick="deleteContact(' + 
+			params + ');"><input type=button value="Edit ✎" class="smallButton" onClick="updateContact(' + params + ');"></span></div>';
   var div2 = '<div id="' + divName2 + '" style="display:none;"><span class="fullWidth"><input type="text" id="' + firstBox + 
 		'" class="searchBox" placeholder="First name"><input type="text" id="' + lastBox + 
 		'" class="searchBox" placeholder="Last name"><input type="text" id="' + phoneBox + 
 		'" class="searchBox" placeholder="Phone number"><input type="text" id="' + emailBox + 
-'" class="searchBox" placeholder="Email address"></span><span class="fullWidth"><input type=button value="Cancel" class="smallButton" onClick="cancelUpdate(' + 
-index + ');"><input type=button value="Confirm" class="smallButton" onClick="acceptUpdate(' + params + ');"></span><span id="' + spanName + 
+'" class="searchBox" placeholder="Email address"></span><span class="fullWidth"><input type=button value="Cancel ✴️" class="smallButton" onClick="cancelUpdate(' + 
+index + ');"><input type=button value="Confirm ✔️" class="smallButton" onClick="acceptUpdate(' + params + ');"></span><span id="' + spanName + 
 '" class="results errorText"></div>';
 
   return div1 + div2;
