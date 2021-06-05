@@ -133,6 +133,10 @@ function checkContact()
         if (this.readyState == 4 && this.status == 200) 
         {
           result.innerHTML = "New contact added."
+          document.getElementById("firstName").value = "";
+          document.getElementById("lastName").value = "";
+          document.getElementById("phoneNumber").value = "";
+          document.getElementById("emailAddress").value = "";
         }
       };
       xhr.send(jsonPayload);
@@ -141,10 +145,6 @@ function checkContact()
     {
       result.innerHTML = err.message;
     }
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
-    document.getElementById("phoneNumber").value = "";
-    document.getElementById("emailAddress").value = "";
   }
 }
 
@@ -319,11 +319,13 @@ function makeContactFloats(entries, index)
   var phoneBox = "phone" + index;
   var emailBox = "email" + index;
 
-  // Finally, we need to name the span for the results of updating, and the paragraph that has the contact info.
+  // Finally, we need to name the span for the results of updating, the paragraph that has the contact info, and the divider bar.
   var spanName = "results" + index;
   var paraName = "contactInfo" + index;
+  var barName = "divider" + index;
 
   // Now plug all these into the HTML.
+  var divBar = '<hr id="' + barName + '">';
   var div1 = '<div id="' + divName1 + '"><p id="' + paraName + '">' + contactInfo + 
 			'</p><span class="fullWidth"><input type=button value="Delete ☓" class="smallButton" onClick="deleteContact(' + 
 			params + ');"><input type=button value="Edit ✎" class="smallButton" onClick="updateContact(' + params + ');"></span></div>';
@@ -335,7 +337,7 @@ function makeContactFloats(entries, index)
 index + ');"><input type=button value="Confirm ✔️" class="smallButton" onClick="acceptUpdate(' + params + ');"></span><span id="' + spanName + 
 '" class="results errorText"></div>';
 
-  return div1 + div2;
+  return divBar + div1 + div2;
 }
 
 
@@ -451,10 +453,10 @@ function acceptUpdate(entries, index)
           document.getElementById("contactInfo" + index).innerHTML = contactInfo;
 
           // Replace the data in the array as well, for the next update.
-          entries[index].first = first;
-          entries[index].last = last;
-          entries[index].phone = phone;
-          entries[index].email = email;
+          entries[index].FirstName = first;
+          entries[index].LastName = last;
+          entries[index].PhoneNumber = phone;
+          entries[index].Email = email;
         }
       };
       xhr.send(jsonPayload);
@@ -502,8 +504,9 @@ function deleteContact(entries, index)
       result.innerHTML = err.message;
     }
 
-    // Remove the entry on the page by setting its display to none.
+    // Remove the entry on the page by setting it and its divider's display to none.
     document.getElementById("entryDiv" + index).style.display = "none";
+    document.getElementById("divider" + index).style.display = "none";
   }
 }
 
