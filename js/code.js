@@ -80,6 +80,10 @@ function registerUser()
         document.getElementById("registerResult").innerHTML = "Thanks for registering! Redirecting back to login page.";
         location.href = "index.html";	
       }
+      else if (this.readyState == 4 && this.status == 409) //Username is already registered.
+      {
+        document.getElementById("registerResult").innerHTML = "Username is already in use; please select another.";
+      } 
     };
     xhr.send(jsonPayload);
   }
