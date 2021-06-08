@@ -18,6 +18,7 @@ function registerUser()
   var registerLastName = document.getElementById("registerLastName").value;
   var login = document.getElementById("registerName").value;
   var password = document.getElementById("registerPassword").value;
+  var confirmPassword = document.getElementById("confirmPassword").value;
   var hash = md5( password );
 	
   document.getElementById("registerResult").innerHTML = "";
@@ -34,6 +35,12 @@ function registerUser()
   if (!passwdRegex.test(password))
   {
     document.getElementById("registerResult").innerHTML = "Password must be 8 or more numbers, letters, or underscores.";
+    return;
+  }
+
+  if (password != confirmPassword)
+  {
+    document.getElementById("registerResult").innerHTML = "Passwords must match.";
     return;
   }
 
@@ -61,6 +68,7 @@ function registerUser()
         saveCookie();
 	
         // Send the user back to main menu so they can log in.
+        document.getElementById("registerResult").innerHTML = "Thanks for registering! Redirecting back to login page.";
         location.href = "index.html";	
       }
     };
@@ -174,6 +182,7 @@ function logInUser()
 
   // Connects to server and sends jsonPayload containing user information, checking if User/Password
   // combo is correct.
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -185,18 +194,17 @@ function logInUser()
       {
         var jsonObject = JSON.parse( xhr.responseText );
         userId = jsonObject.id;
-		
-        if(userId < 1)
-        {		
-          document.getElementById("loginResult").innerHTML = "User/Password combination incorrect.";
-          return;
-        }
-		
+
         firstName = jsonObject.firstName;
         lastName = jsonObject.lastName;
         document.getElementById("loginResult").innerHTML = "Logged in! Welcome.";
         saveCookie();
         location.href = "mainPage.htm";
+      }
+      else
+      {
+        document.getElementById("loginResult").innerHTML = "User/Password combination incorrect.";
+        return;
       }
     };
     xhr.send(jsonPayload);
