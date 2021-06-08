@@ -14,7 +14,7 @@ body
     text-align: center;
     font-family: 'Roboto Mono', monospace;
     color: #FFFFFF;
-    filter: drop-shadow(5px 5px 0px rgb(0, 8, 70));
+    filter: drop-shadow(5px 5px 0px rgb(0, 12, 100));
 }
 
 #mainDiv
@@ -26,7 +26,7 @@ body
     padding-bottom: 25px;
     background: #7fd5e1;
     border-radius: 10px;  /* fallback for old browsers */
-    filter: drop-shadow(5px 5px 0px rgb(0, 8, 70));
+    filter: drop-shadow(5px 5px 0px rgb(0, 12, 100));
 }
 
 .buttons
