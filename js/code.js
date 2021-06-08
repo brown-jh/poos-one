@@ -30,6 +30,20 @@ function registerUser()
   //   return;
   // }
 
+  // Check if the username is long enough.
+  var loginRegex = /^\w{5,}$/; // Matches a string of 5 or more alphanumerics.
+  if (!loginRegex.test(login))
+  {
+    document.getElementById("registerResult").innerHTML = "Username must be 5 or more numbers, letters, or underscores.";
+    return;
+  }
+
+  if (password != confirmPassword)
+  {
+    document.getElementById("registerResult").innerHTML = "Passwords do not match.";
+    return;
+  }
+
   var passwdRegex = /^\w{8,}$/; // Matches a string of 8 or more alphanumerics.
   // Check if the password is valid.
   if (!passwdRegex.test(password))
@@ -38,11 +52,6 @@ function registerUser()
     return;
   }
 
-  if (password != confirmPassword)
-  {
-    document.getElementById("registerResult").innerHTML = "Passwords must match.";
-    return;
-  }
 
   // If we didn't get an error, we can proceed to registering the new account.  
   var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '", "firstName" : "' + registerFirstName + '", "lastName" : "' + registerLastName + '"}'
@@ -71,6 +80,10 @@ function registerUser()
         document.getElementById("registerResult").innerHTML = "Thanks for registering! Redirecting back to login page.";
         location.href = "index.html";	
       }
+      else if (this.readyState == 4 && this.status == 409) //Username is already registered.
+      {
+        document.getElementById("registerResult").innerHTML = "Username is already in use; please select another.";
+      } 
     };
     xhr.send(jsonPayload);
   }
