@@ -51,6 +51,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 		}
 		else
 		{
+            http_response_code(400);
 			returnWithError("No Records Found");
 		}
 
