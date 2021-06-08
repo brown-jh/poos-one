@@ -48,7 +48,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         {
             $stmt->close();
             $conn->close();
-            returnWithError("error: username already exists");
+            http_response_code(409);
+            returnWithError("username already exists");
         }
 
 
