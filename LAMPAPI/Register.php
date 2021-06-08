@@ -5,10 +5,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     $inData = getRequestInfo();
 
     $id = 0;
-    $login = $inData['login'];
-    $password = $inData['password'];
-    $firstName = $inData['firstName'];
-    $lastName = $inData['lastName'];
+    $login = $inData["login"];
+    $password = $inData["password"];
+    $firstName = $inData["firstName"];
+    $lastName = $inData["lastName"];
     $dateCreated = "";
     $dateLastLoggedIn = "";
 
@@ -38,18 +38,37 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
         //$stmt = $conn->prepare("SELECT MAX(ID) FROM Users");
 
-        $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
-        // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
-        // Send the now prepared command!
+        $stmt = $conn->prepare("SELECT Login FROM Users WHERE Login = ?");
+        $stmt->bind_param("s", $login);
         $stmt->execute();
 
+        $result = $stmt->get_result();
+
+        if ($existing = $result->fetch_assoc())
+        {
+            $stmt->close();
+            $conn->close();
+            http_response_code(409);
+            returnWithError("username already exists");
+        }
 
 
-        // Close the connection
-		$stmt->close();
-		$conn->close();
-        returnWithError("");
+        else
+        {
+            $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
+            // Now let's bind our variables to those ?s in the above line
+            $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
+            // Send the now prepared command!
+            $stmt->execute();
+    
+    
+    
+            // Close the connection
+            $stmt->close();
+            $conn->close();
+            returnWithError("");
+        }
+
     } 
 	function returnWithError( $err )
 	{

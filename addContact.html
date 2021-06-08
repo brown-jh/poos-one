@@ -20,14 +20,15 @@
 <h1 id="title">Add Contact</h1>
 
 <div id="mainDiv">
-	<span id="inner-title">To add a new contact, please give the contact's first and last name, phone number and email.<br></span>
+	<span id="inner-title">Please give the new contact's information. First and last name are necessary; phone number and email are optional.<br></span>
 	<input type="text" id="firstName" placeholder="First name" /><br />
         <input type="text" id="lastName" placeholder="Last name" /><br />
         <input type="text" id="phoneNumber" placeholder="Phone number" /><br />
         <input type="text" id="emailAddress" placeholder="Email address" /><br />
 	<input type="button" id="checkButton" class="buttons spaced" value="Add contact" onclick="checkContact();">
-        <input type="button" id="cancelButton" class="buttons spaced" value="Cancel" onclick="goBack();">
-	<span id="addResult" class="results errorText"></span>
+        <span id="addResult" class="results errorText"></span>
+        <input type="button" id="cancelButton" class="buttons spaced" value="Back" onclick="goBack();">
+	
 </div>
 
 </body>

@@ -1,7 +1,16 @@
 <?php 
+// Refered to: https://stackoverflow.com/questions/57901808/cors-preflight-request-doesnt-pass-access-control-check-it-does-not-have-http
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
+header("Access-Control-Allow-Methods: HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
+header('Content-Type: application/json');
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == "OPTIONS") {
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
+header("HTTP/1.1 200 OK");
+die();
+}
 
     $inData = getRequestInfo();
     
@@ -51,7 +60,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 		}
 		else
 		{
-			returnWithError("No Records Found");
+            http_response_code(401);
+			returnWithError("No Records Found");   
 		}
 
         // Close the connection
