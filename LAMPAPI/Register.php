@@ -52,19 +52,22 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         }
 
 
+        else
+        {
+            $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
+            // Now let's bind our variables to those ?s in the above line
+            $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
+            // Send the now prepared command!
+            $stmt->execute();
+    
+    
+    
+            // Close the connection
+            $stmt->close();
+            $conn->close();
+            returnWithError("");
+        }
 
-        $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
-        // Now let's bind our variables to those ?s in the above line
-        $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
-        // Send the now prepared command!
-        $stmt->execute();
-
-
-
-        // Close the connection
-		$stmt->close();
-		$conn->close();
-        returnWithError("");
     } 
 	function returnWithError( $err )
 	{
