@@ -23,14 +23,14 @@
 
 <div id="mainDiv">
   
-	<span id="inner-title">To search for contacts, enter in their credentials and press search. To add a contact, click the "Add new contact" button below.<br></span>
+	<span id="inner-title">To search for contacts, enter in their credentials. To add a contact, click the "Add new contact" button below.<br></span>
         <span class="fullWidth">
-	  <input type="text" id="firstSearch" class="searchBox" placeholder="First name">
-          <input type="text" id="lastSearch" class="searchBox" placeholder="Last name">
-          <input type="text" id="phoneSearch" class="searchBox" placeholder="Phone number">
-          <input type="text" id="emailSearch" class="searchBox" placeholder="Email address">
+	  <input type="text" id="firstSearch" class="searchBox" placeholder="First name" onKeyUp="searchContacts();">
+          <input type="text" id="lastSearch" class="searchBox" placeholder="Last name" onKeyUp="searchContacts();">
+          <input type="text" id="phoneSearch" class="searchBox" placeholder="Phone number" onKeyUp="searchContacts();">
+          <input type="text" id="emailSearch" class="searchBox" placeholder="Email address" onKeyUp="searchContacts();">
         </span>
-	<input type="button" id="checkButton" class="buttons spaced" value="Search" onClick="searchContacts();">
+	<input type="button" id="checkButton" class="buttons spaced" value="Show All" onClick="showAllContacts();">
         <span id="searchResult" class="results"></span>
         <input type="button" id="backButton" class="buttons spaced" value="Add new contact" onClick="goToAdd();">
         <span class="fullWidth">
