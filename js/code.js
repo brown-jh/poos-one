@@ -214,7 +214,7 @@ function logInUser()
         saveCookie();
         location.href = "mainPage.htm";
       }
-      else
+      else if (this.readyState == 4 && this.status == 401)
       {
         document.getElementById("loginResult").innerHTML = "User/Password combination incorrect.";
         return;
