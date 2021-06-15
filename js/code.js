@@ -242,12 +242,23 @@ function goToRegister()
 // Triggers from an onLoad function for mainPage.html, updating the name of the logged in user.
 function updateName()
 {
-  document.getElementById("inner-title").innerHTML = "Hello, " + firstName + "! To search a contact, enter in their credentials and press search. Otherwise, to add a contact, please click the button below."
+  document.getElementById("inner-title").innerHTML = "Hello, " + firstName + " " + lastName + "! To search for a contact, enter their details into the search boxes. To show all of your contacts, click \"Show All\". To add a contact, click \"Add new contact\"."
 }
 
 
 // This is the array used to store the contacts.
 var contactList = [];
+
+
+// Show all of the contacts (by searching with no parameters) when the user clicks Show All.
+function showAllContacts()
+{
+  document.getElementById("firstSearch").value = "";
+  document.getElementById("lastSearch").value = "";
+  document.getElementById("phoneSearch").value = "";
+  document.getElementById("emailSearch").value = "";
+  searchContacts();
+}
 
 
 // Searches through the contacts and returns found contacts for you to edit/remove.
@@ -262,8 +273,10 @@ function searchContacts()
   var phone = document.getElementById("phoneSearch").value;
   var email = document.getElementById("emailSearch").value;
 
-  var result = document.getElementById("searchResult");
-  result.innerHTML = ""; // Clear the login result field.
+  var result = document.getElementById("searchResult"); //Where the search results go.
+
+  // This string will contain the HTML for the new contact list.
+  var resultHTML;
 
   //This is where we submit the request to the server.
   var jsonPayload = '{"firstName" : "' + first + '", "lastName" : "' + last + '", "phoneNumber" : "' + phone + '", "email" : "' + email + '", "userId" : "' + userId + '"}';
@@ -279,7 +292,7 @@ function searchContacts()
     {
       if (this.readyState == 4 && this.status == 200) 
       {
-        result.innerHTML = "Contact(s) retrieved.<br>"
+        resultHTML = "Contact(s) retrieved.<br>"
                 
         // Updates the contactList array from database, each array index is a contact.
         var jsonObject = JSON.parse( xhr.responseText );
@@ -298,8 +311,10 @@ function searchContacts()
         // For each entry, I show a contact with the contact's info formatted, and Update and Remove buttons below.
         for (var i = 0; i < Object.keys(jsonObject).length; i++)
         {
-          result.innerHTML += makeContactFloats(contactList, i);
-        }		
+          resultHTML += makeContactFloats(contactList, i);
+        }	
+        
+        result.innerHTML = resultHTML;	
       }  
     };
     xhr.send(jsonPayload);
